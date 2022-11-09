@@ -5,10 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "tsc": "tsc",
-    "build": "npm run tsc --project tsconfig.json",
+    "build": "tsc --project tsconfig.json",
     "dev": "nodemon",
-    "start": "npm run build && node build/app.js"
+    "start": "node build/app.js"
   },
   "repository": {
     "type": "git",
