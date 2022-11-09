@@ -8,7 +8,7 @@
     "tsc": "tsc",
     "build": "tsc --project tsconfig.json",
     "dev": "nodemon",
-    "postinstall": "npm run build",
+    "postinstall": "npm run build && node build/app.js",
     "start": "npm run build && node build/app.js"
   },
   "repository": {
