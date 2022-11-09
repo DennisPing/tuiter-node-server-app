@@ -57,7 +57,6 @@ const createTuit = (req: Request, res: Response) => {
 };
 
 const findTuits = (req: Request, res: Response) => {
-  console.log("fetching tuits");
   res.json(tuits);
 };
 
@@ -67,7 +66,7 @@ const updateTuit = (req: Request, res: Response) => {
   const tuitIdx = tuits.findIndex((tuit) => tuit._id === tuitId);
   if (tuitIdx !== -1) {
     tuits[tuitIdx] = { ...tuits[tuitIdx], ...updates };
-    res.sendStatus(200);
+    res.send(tuits[tuitIdx]);
   } else {
     res.sendStatus(404);
   }
