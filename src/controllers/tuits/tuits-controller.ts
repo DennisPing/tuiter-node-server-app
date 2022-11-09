@@ -4,31 +4,60 @@ import posts from "./tuits";
 
 type post = {
   _id: number;
-  topic: string;
+  avatarIcon: string;
   username: string;
   handle: string;
   time: string;
-  image: string;
-  title: string;
-  tuit: string;
-  liked: boolean;
-  likes: number;
-  replies: number;
+  text: string;
+  image?: string;
+  mediaCard?: {
+    mediaTitle: string;
+    mediaText: string;
+    mediaDomain: string;
+    mediaLink: string;
+  };
+  topic?: string;
+  comments: number;
   retuits: number;
+  retuited: boolean;
+  likes: number;
+  liked: boolean;
+  socialAction?: {
+    action: string;
+    username: string;
+  };
+  verified: boolean;
+};
+
+const currentUser = {
+  username: "Dennis Ping",
+  handle: "DennisPing",
+  avatarIcon: "https://mushucdn.b-cdn.net/Dennis_Headshot_Portrait.jpg",
+};
+
+const templateTuit = {
+  ...currentUser,
+  time: "1m",
+  comments: 0,
+  retuits: 0,
+  likes: 0,
+  liked: false,
 };
 
 let tuits: post[] = posts;
 
 const createTuit = (req: Request, res: Response) => {
-  const newTuit: post = req.body;
-  newTuit._id = new Date().getTime();
-  newTuit.likes = 0;
-  newTuit.liked = false;
-  tuits.push(newTuit);
+  const newTuit = {
+    ...templateTuit,
+    ...req.body,
+    _id: new Date().getTime(),
+  };
+  tuits.unshift(newTuit);
   res.json(newTuit);
 };
 
 const findTuits = (req: Request, res: Response) => {
+  console.log("fetching tuits");
   res.json(tuits);
 };
 
