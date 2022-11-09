@@ -6,9 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "tsc": "tsc",
-    "build": "tsc --project tsconfig.json",
+    "build": "npm run tsc --project tsconfig.json",
     "dev": "nodemon",
-    "postinstall": "npm run build && node build/app.js",
     "start": "npm run build && node build/app.js"
   },
   "repository": {
