@@ -21,6 +21,8 @@ export default [
     retuited: false,
     likes: 37500,
     liked: true,
+    dislikes: 4,
+    disliked: false,
     verified: true,
   },
   {
@@ -37,6 +39,8 @@ export default [
     retuited: false,
     likes: 5850,
     liked: true,
+    dislikes: 5,
+    disliked: false,
     socialAction: {
       action: "retweeted",
       username: "Dua Lipa",
@@ -55,6 +59,8 @@ export default [
     retuited: false,
     likes: 4364,
     liked: false,
+    dislikes: 9,
+    disliked: false,
     verified: false,
   },
   {
@@ -71,6 +77,8 @@ export default [
     retuited: false,
     likes: 25000,
     liked: true,
+    dislikes: 24,
+    disliked: false,
     socialAction: {
       action: "liked",
       username: "Anya Forger",
@@ -100,6 +108,8 @@ export default [
     retuited: false,
     likes: 8234,
     liked: false,
+    dislikes: 10,
+    disliked: true,
     socialAction: {
       action: "follows",
       username: "Steve Harrington",
@@ -118,6 +128,8 @@ export default [
     retuited: false,
     likes: 65,
     liked: true,
+    dislikes: 0,
+    disliked: false,
     verified: false,
   },
   {
@@ -132,6 +144,8 @@ export default [
     retuited: false,
     likes: 45,
     liked: true,
+    dislikes: 2,
+    disliked: false,
     verified: false,
   },
   {
@@ -149,6 +163,8 @@ export default [
     retuited: true,
     likes: 42000,
     liked: true,
+    dislikes: 99,
+    disliked: true,
     verified: true,
   },
 ];

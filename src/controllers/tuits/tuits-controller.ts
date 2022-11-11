@@ -22,11 +22,13 @@ type post = {
   retuited: boolean;
   likes: number;
   liked: boolean;
+  dislikes: number;
+  disliked: boolean;
   socialAction?: {
     action: string;
     username: string;
   };
-  verified: boolean;
+  verified?: boolean;
 };
 
 const currentUser = {
