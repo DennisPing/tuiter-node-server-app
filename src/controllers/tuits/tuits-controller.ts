@@ -28,7 +28,7 @@ type post = {
     action: string;
     username: string;
   };
-  verified?: boolean;
+  verified: boolean;
 };
 
 const currentUser = {
@@ -44,6 +44,9 @@ const templateTuit = {
   retuits: 0,
   likes: 0,
   liked: false,
+  dislikes: 0,
+  disliked: false,
+  verified: false,
 };
 
 let tuits: post[] = posts;
