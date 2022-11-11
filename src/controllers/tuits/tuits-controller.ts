@@ -34,7 +34,7 @@ type post = {
 const currentUser = {
   username: "Dennis Ping",
   handle: "DennisPing",
-  avatarIcon: "https://mushucdn.b-cdn.net/Dennis_Headshot_Portrait.jpg",
+  avatarIcon: "https://mushucdn.b-cdn.net/Profile_Portrait_cropped.jpeg",
 };
 
 const templateTuit = {
