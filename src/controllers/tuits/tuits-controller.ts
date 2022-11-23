@@ -1,35 +1,9 @@
 import { Express, Request, Response } from "express";
+import mongoose from "mongoose";
+import { MongoError } from "mongodb";
 
-import posts from "./tuits";
-
-type post = {
-  _id: number;
-  avatarIcon: string;
-  username: string;
-  handle: string;
-  time: string;
-  text: string;
-  image?: string;
-  mediaCard?: {
-    mediaTitle: string;
-    mediaText: string;
-    mediaDomain: string;
-    mediaLink: string;
-  };
-  topic?: string;
-  comments: number;
-  retuits: number;
-  retuited: boolean;
-  likes: number;
-  liked: boolean;
-  dislikes: number;
-  disliked: boolean;
-  socialAction?: {
-    action: string;
-    username: string;
-  };
-  verified: boolean;
-};
+import * as tuitsDao from "./tuits-dao";
+import { ITuit } from "../interfaces/ituit";
 
 const currentUser = {
   username: "Dennis Ping",
@@ -37,60 +11,61 @@ const currentUser = {
   avatarIcon: "https://mushucdn.b-cdn.net/Profile_Portrait_cropped.jpeg",
 };
 
-const templateTuit = {
-  ...currentUser,
-  time: "1m",
-  comments: 0,
-  retuits: 0,
-  likes: 0,
-  liked: false,
-  dislikes: 0,
-  disliked: false,
-  verified: false,
-};
-
-let tuits: post[] = posts;
-
-const createTuit = (req: Request, res: Response) => {
-  const newTuit = {
-    ...templateTuit,
+const createTuit = async (req: Request, res: Response) => {
+  const newTuit: ITuit = {
+    ...currentUser,
     ...req.body,
-    _id: new Date().getTime(),
   };
-  tuits.unshift(newTuit);
-  res.json(newTuit);
-};
-
-const findTuits = (req: Request, res: Response) => {
-  res.json(tuits);
-};
-
-const updateTuit = (req: Request, res: Response) => {
-  const tuitId = parseInt(req.params.tid);
-  const updates = req.body;
-  const tuitIdx = tuits.findIndex((tuit) => tuit._id === tuitId);
-  if (tuitIdx !== -1) {
-    tuits[tuitIdx] = { ...tuits[tuitIdx], ...updates };
-    res.send(tuits[tuitIdx]);
-  } else {
-    res.sendStatus(404);
+  try {
+    const insertedTuit = await tuitsDao.createTuit(newTuit);
+    res.json(insertedTuit);
+  } catch (err) {
+    res.status(500).json({ message: (<MongoError>err).message });
   }
 };
 
-const deleteTuit = (req: Request, res: Response) => {
-  const tuitId = parseInt(req.params.tid);
-  let success = false;
-  tuits = tuits.filter((tuit) => {
-    if (tuit._id === tuitId) {
-      success = true;
-      return false;
+const findTuits = async (_req: Request, res: Response) => {
+  try {
+    const tuits = await tuitsDao.findTuits();
+    res.json(tuits);
+  } catch (err) {
+    res.status(500).json({ message: (<MongoError>err).message });
+  }
+};
+
+const updateTuit = async (req: Request, res: Response) => {
+  if (!mongoose.Types.ObjectId.isValid(req.params.tid)) {
+    res.status(400).json({ message: "Invalid tuit id" });
+    return;
+  }
+  const tuitId = new mongoose.Types.ObjectId(req.params.tid);
+  try {
+    const status = await tuitsDao.updateTuit(tuitId, req.body);
+    if (status.matchedCount > 0) {
+      res.sendStatus(200);
+    } else {
+      res.sendStatus(404);
     }
-    return true;
-  });
-  if (success) {
-    res.sendStatus(200);
-  } else {
-    res.sendStatus(404);
+  } catch (err) {
+    res.status(500).json({ message: (<MongoError>err).message });
+  }
+};
+
+const deleteTuit = async (req: Request, res: Response) => {
+  if (!mongoose.Types.ObjectId.isValid(req.params.tid)) {
+    res.status(400).json({ message: "Invalid tuit id" });
+    return;
+  }
+  const tuitId = new mongoose.Types.ObjectId(req.params.tid);
+  try {
+    const status = await tuitsDao.deleteTuit(tuitId);
+    if (status.deletedCount > 0) {
+      res.sendStatus(200);
+    } else {
+      res.sendStatus(404);
+    }
+  } catch (err) {
+    res.status(500).json({ message: (<MongoError>err).message });
   }
 };
 
