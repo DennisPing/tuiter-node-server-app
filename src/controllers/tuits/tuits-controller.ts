@@ -43,7 +43,7 @@ const updateTuit = async (req: Request, res: Response) => {
     const updatedTuit = await tuitsDao.updateTuit(tuitId, req.body);
     if (updatedTuit) {
       console.log(updatedTuit);
-      res.send(updatedTuit);
+      res.json(updatedTuit);
     } else {
       res.sendStatus(404);
     }
