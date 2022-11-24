@@ -1,9 +1,9 @@
-import { Express, Request, Response } from "express";
 import mongoose from "mongoose";
 import { MongoError } from "mongodb";
+import { Express, Request, Response } from "express";
 
 import * as tuitsDao from "./tuits-dao";
-import { ITuit } from "../interfaces/ituit";
+import { ITuit } from "../../interfaces/ituit";
 
 const currentUser = {
   username: "Dennis Ping",
@@ -40,9 +40,10 @@ const updateTuit = async (req: Request, res: Response) => {
   }
   const tuitId = new mongoose.Types.ObjectId(req.params.tid);
   try {
-    const status = await tuitsDao.updateTuit(tuitId, req.body);
-    if (status.matchedCount > 0) {
-      res.sendStatus(200);
+    const updatedTuit = await tuitsDao.updateTuit(tuitId, req.body);
+    if (updatedTuit) {
+      console.log(updatedTuit);
+      res.send(updatedTuit);
     } else {
       res.sendStatus(404);
     }
