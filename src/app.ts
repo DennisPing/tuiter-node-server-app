@@ -15,6 +15,9 @@ TuitsController(app);
 HelloController(app);
 UserController(app);
 
-app.listen(process.env.PORT || 4000, () => {
+const server = require("http").createServer(app);
+server.listen(process.env.PORT || 4000, () => {
   console.log("Listening on port " + (process.env.PORT || 4000));
 });
+
+server.keepAliveTimeout = 60 * 1000;
