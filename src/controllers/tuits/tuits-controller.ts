@@ -20,7 +20,7 @@ const createTuit = async (req: Request, res: Response) => {
     const insertedTuit = await tuitsDao.createTuit(newTuit);
     res.send(insertedTuit);
   } catch (err) {
-    res.status(500).json({ message: (<MongoError>err).message });
+    res.status(503).json({ message: (<MongoError>err).message });
   }
 };
 
@@ -29,7 +29,7 @@ const findTuits = async (_req: Request, res: Response) => {
     const tuits = await tuitsDao.findTuits();
     res.send(tuits);
   } catch (err) {
-    res.status(500).json({ message: (<MongoError>err).message });
+    res.status(503).json({ message: (<MongoError>err).message });
   }
 };
 
@@ -47,7 +47,7 @@ const updateTuit = async (req: Request, res: Response) => {
       res.sendStatus(404);
     }
   } catch (err) {
-    res.status(500).json({ message: (<MongoError>err).message });
+    res.status(503).json({ message: (<MongoError>err).message });
   }
 };
 
@@ -65,7 +65,7 @@ const deleteTuit = async (req: Request, res: Response) => {
       res.sendStatus(404);
     }
   } catch (err) {
-    res.status(500).json({ message: (<MongoError>err).message });
+    res.status(503).json({ message: (<MongoError>err).message });
   }
 };
 
