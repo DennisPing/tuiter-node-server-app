@@ -18,7 +18,7 @@ const createTuit = async (req: Request, res: Response) => {
   };
   try {
     const insertedTuit = await tuitsDao.createTuit(newTuit);
-    res.json(insertedTuit);
+    res.send(insertedTuit);
   } catch (err) {
     res.status(500).json({ message: (<MongoError>err).message });
   }
@@ -27,7 +27,7 @@ const createTuit = async (req: Request, res: Response) => {
 const findTuits = async (_req: Request, res: Response) => {
   try {
     const tuits = await tuitsDao.findTuits();
-    res.json(tuits);
+    res.send(tuits);
   } catch (err) {
     res.status(500).json({ message: (<MongoError>err).message });
   }
@@ -42,7 +42,7 @@ const updateTuit = async (req: Request, res: Response) => {
   try {
     const updatedTuit = await tuitsDao.updateTuit(tuitId, req.body);
     if (updatedTuit) {
-      res.json(updatedTuit);
+      res.send(updatedTuit);
     } else {
       res.sendStatus(404);
     }

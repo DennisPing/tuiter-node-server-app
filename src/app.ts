@@ -1,4 +1,5 @@
 import express from "express";
+import http from "http";
 import cors from "cors";
 import mongoose from "mongoose";
 import HelloController from "./controllers/hello-controller";
@@ -15,9 +16,7 @@ TuitsController(app);
 HelloController(app);
 UserController(app);
 
-const server = require("http").createServer(app);
+const server = http.createServer(app);
 server.listen(process.env.PORT || 4000, () => {
   console.log("Listening on port " + (process.env.PORT || 4000));
 });
-
-server.keepAliveTimeout = 60 * 1000;
